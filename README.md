@@ -14,7 +14,7 @@ with
 
 I am going to try and build images every release hosted at [hub.docker.com](https://hub.docker.com/r/nzchicken/sfdx/)
 
-## Including in bitbucket-pipelines.yml
+## Using with Bitbucket Pipelines
 
 Should be as simple as adding `image: nzchicken/sfdx:latest` to the top of your
 bitbucket-pipelines.yml fiels in your repo. It is recommended that you use a
@@ -31,10 +31,15 @@ pipelines:
   default:
     - step:
         script:
+          - sfdx force --version
           - ant deploy -Dsf.username=$USERNAME -Dsf.password=$PASSWORD -Dsf.testlevel=$TESTLEVEL
 ```
 
-### Sample build.xml
+Note: The above will just display the sfdx force version, and then deploy to
+an org using ant based on the package.xml in the src folder (build.xml below).
+Adjust to suit your needs, and feel free to remove the sfdx/ant command etc.
+
+### Sample build.xml (Force Migration Tool)
 
 ```xml
 <project name="Saleforce Pipeline Builds" default="test" basedir="." xmlns:sf="antlib:com.salesforce">
